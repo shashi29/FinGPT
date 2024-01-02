@@ -1,52 +1,51 @@
-# FinGPT
+# FastAPI Project
 
-app/
-│
-├── database.py
-├── dependencies.py
-├── main.py
-│
-├── routers/
-│   ├── __init__.py
-│   ├── board_router.py
-│   ├── prompt_router.py
-│   └── user_router.py
-│
-├── models/
-│   ├── __init__.py
-│   ├── board.py
-│   ├── prompt.py
-│   └── user.py
-│
-└── repositories/
-    ├── __init__.py
-    ├── base_repository.py
-    ├── board_repository.py
-    ├── prompt_repository.py
-    └── user_repository.py
+This is a FastAPI project that implements an API for managing boards and prompts.
 
+## Code Structure
 
+The project is structured as follows:
 
-Explanation of the structure:
+- `app`: Contains the main application files.
+  - `__init__.py`: Initializes the FastAPI app.
+  - `database.py`: Configures the database connection.
+  - `dependencies.py`: Defines dependency functions.
+  - `logging_config.ini`: Configuration file for logging.
+  - `main.py`: Main application entry point.
+  - `routers`: Contains API routers.
+    - `__init__.py`: Initializes the routers.
+    - `board_router.py`: Handles routes related to boards.
+    - `prompt_router.py`: Handles routes related to prompts.
+    - `user_router.py`: Handles routes related to users.
+  - `repositories`: Contains database interaction logic.
+    - `__init__.py`: Initializes the repositories.
+    - `base_repository.py`: Base repository with common functions.
+    - `board_repository.py`: Repository for board-related operations.
+    - `prompt_repository.py`: Repository for prompt-related operations.
+    - `user_repository.py`: Repository for user-related operations.
+  - `models`: Contains Pydantic models.
+    - `__init__.py`: Initializes the models package.
+    - `board.py`: Pydantic model for the board.
+    - `prompt.py`: Pydantic model for the prompt.
+    - `user.py`: Pydantic model for the user.
+- `config.ini`: Configuration file for database connection.
+- `requirements.txt`: Lists project dependencies.
 
-main.py: The main application entry point.
-app/: The package containing the FastAPI application.
-__init__.py: Marks the directory as a Python package.
-config.ini: Configuration file for application settings.
-logging_config.ini: Configuration file for logging settings.
-dependencies.py: File containing dependency providers.
-database.py: File handling database connections and configuration.
-repositories/: Directory containing repository classes.
-__init__.py: Marks the directory as a Python package.
-base_repository.py: Base repository class (optional).
-board_repository.py: Repository for board-related operations.
-user_repository.py: Repository for user-related operations.
-models/: Directory containing Pydantic models.
-__init__.py: Marks the directory as a Python package.
-board.py: Pydantic model for the Board.
-user.py: Pydantic model for the User.
-routers/: Directory containing route handlers.
-__init__.py: Marks the directory as a Python package.
-board_router.py: FastAPI router for board-related routes.
-user_router.py: FastAPI router for user-related routes.
-requirements.txt: File listing project dependencies.
+## Getting Started
+
+1. Clone the repository.
+2. Install dependencies: `pip install -r requirements.txt`.
+3. Configure the database connection in `config.ini`.
+4. Run the FastAPI app: `uvicorn app.main:app --reload`.
+
+## Usage
+
+- Visit the FastAPI documentation at `http://127.0.0.1:8000/docs` for interactive API documentation.
+
+## Contributing
+
+Feel free to contribute to this project by opening issues or pull requests.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
