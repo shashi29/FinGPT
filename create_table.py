@@ -10,7 +10,7 @@ conn.set_session(autocommit=True) # Set autocommit to True
 
 cur = conn.cursor()
 
-cur.execute("select * from Users where email = 'test@example.com' AND password = 'admin';") 
+cur.execute("SELECT * FROM Boards;") 
 # Replace with your actual user data
 # new_user_data = {
 #     "name": "admin",

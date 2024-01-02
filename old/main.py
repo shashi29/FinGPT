@@ -1,4 +1,4 @@
-#export OPENAI_API_KEY="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"
+
 
 import pandas as pd
 import glob
