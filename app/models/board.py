@@ -13,7 +13,7 @@ class Board(BaseModel):
     
     class Config:
         orm_mode = True
-        schema_extra = {
+        json_schema_extra = {
             "examples": [
                 {
                     "name": "Board1",

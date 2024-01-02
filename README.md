@@ -1,31 +1,30 @@
 # FinGPT
 
-my_fastapi_project/
+app/
 │
+├── database.py
+├── dependencies.py
 ├── main.py
-├── app/
-│   ├── __init__.py
-│   ├── config.ini
-│   ├── logging_config.ini
-│   ├── dependencies.py
-│   ├── database.py
-│   ├── repositories/
-│   │   ├── __init__.py
-│   │   ├── base_repository.py
-│   │   ├── board_repository.py
-│   │   ├── user_repository.py
-│   │
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── board.py
-│   │   ├── user.py
-│   │
-│   ├── routers/
-│   │   ├── __init__.py
-│   │   ├── board_router.py
-│   │   ├── user_router.py
 │
-├── requirements.txt
+├── routers/
+│   ├── __init__.py
+│   ├── board_router.py
+│   ├── prompt_router.py
+│   └── user_router.py
+│
+├── models/
+│   ├── __init__.py
+│   ├── board.py
+│   ├── prompt.py
+│   └── user.py
+│
+└── repositories/
+    ├── __init__.py
+    ├── base_repository.py
+    ├── board_repository.py
+    ├── prompt_repository.py
+    └── user_repository.py
+
 
 
 Explanation of the structure:
