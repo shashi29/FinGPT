@@ -7,8 +7,6 @@ from langchain_experimental.agents import create_pandas_dataframe_agent, create_
 from langchain.agents.agent_types import AgentType
 import pandas as pd
 
-os.environ["OPENAI_API_KEY"] = "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"
-
 df = pd.read_csv("/workspaces/FinGPT/data/July 23 Graphs.xlsx_Posted Sales Invoice Lines.csv")
 
 pd_agent = create_pandas_dataframe_agent(OpenAI(temperature=0), 

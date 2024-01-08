@@ -1,30 +1,47 @@
-CREATE TABLE Users (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    password VARCHAR(255)
-);
+import psycopg2
 
-CREATE TABLE Boards (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES Users(id),
-    name VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+conn = psycopg2.connect(host="collaborativedocsdb.c9siiamcczqo.ap-southeast-2.rds.amazonaws.com",
+                        port="5432", 
+                        user="postgres",
+                        dbname="collaborativedocsdb_test",
+                        password="a55zWlt:CYtAi|FB(|jJSpRA90N}")
 
-CREATE TABLE Documents (
-    id SERIAL PRIMARY KEY,
-    board_id INTEGER REFERENCES Boards(id),
-    name VARCHAR(255),
-    size INTEGER,
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+conn.set_session(autocommit=True) # Set autocommit to True
 
-CREATE TABLE Prompts (
-    id SERIAL PRIMARY KEY,
-    board_id INTEGER REFERENCES Boards(id),
-    prompt_text TEXT,
-    prompt_output TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+cur = conn.cursor()
+
+cur.execute("SELECT * FROM Boards;") 
+# Replace with your actual user data
+# new_user_data = {
+#     "name": "admin",
+#     "email": "test@example.com",
+#     "password": "admin",  # Make sure to hash the password
+#     "client_number": "001",
+#     "customer_number": "12345",
+# }
+
+# # Insert the new user into the Users table
+# cur.execute(
+#     """
+#     INSERT INTO Users (name, email, password, client_number, customer_number)
+#     VALUES (%s, %s, %s, %s, %s)
+#     RETURNING id, name, email, client_number, customer_number;
+#     """,
+#     (
+#         new_user_data["name"],
+#         new_user_data["email"],
+#         new_user_data["password"],
+#         new_user_data["client_number"],
+#         new_user_data["customer_number"],
+#     ),
+# )
+
+results = cur.fetchall()
+
+# Display the inserted user's information
+print("User inserted successfully:")
+#print(dict(zip(["id", "name", "email", "client_number", "customer_number"], results)))
+
+print(results)
+cur.close()
+conn.close()

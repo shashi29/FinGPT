@@ -1,5 +1,4 @@
 # import openai
-# # openai.api_key = "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"
 
 # from openai import OpenAI
 # client = OpenAI()
