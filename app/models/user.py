@@ -15,8 +15,11 @@ class User(BaseModel):
         "json_schema_extra": {
             "examples": [
                 {
+                    "name" : "test",
                     "email": "test@example.com",
-                    "password": "admin"
+                    "password": "admin",
+                    "client_number" : "01",
+                    "customer_number" : "12345"
                 }
             ]
         }

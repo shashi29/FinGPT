@@ -7,6 +7,7 @@ from app.models.user import User
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
+from sqlalchemy import inspect, text
 
 SECRET_KEY = "test_token"
 ALGORITHM = "HS256"
@@ -23,60 +24,74 @@ class UserRepository(BaseRepository):
         super().__init__('Users')
 
     def create_user(self, user: User) -> Any:
-        query = sql.SQL("""
-            INSERT INTO Users (name, email, password, client_number, customer_number)
-            VALUES (%s, %s, %s, %s, %s)
-            RETURNING id, name, email, password, client_number, customer_number;
-        """).format(table_name=sql.Identifier(self.table_name))
+        query = text("""
+        INSERT INTO Users (name, email, password, client_number, customer_number)
+        VALUES (:name, :email, :password, :client_number, :customer_number)
+        RETURNING id, name, email, password, client_number, customer_number;
+        """)
 
-        values = (user.name, user.email, user.password, user.client_number, user.customer_number)
+        values = {
+            "name": user.name,
+            "email": user.email,
+            "password": user.password,
+            "client_number": user.client_number,
+            "customer_number": user.customer_number
+        }
 
         user_data_tuple = self.execute_query(query, values)
         user_instance = User(**dict(zip(User.__annotations__, user_data_tuple)))
         return user_instance
 
-
     def get_users(self) -> Any:
-        query = sql.SQL("""
-            SELECT * FROM Users;
-        """).format(table_name=sql.Identifier(self.table_name))
+        query = text(""" SELECT * FROM Users;""")
 
         user_data_list = self.execute_query_all(query)
         user_dict = [User(**dict(zip(User.__annotations__, user_data))) for user_data in user_data_list]
         return user_dict
 
     def get_user(self, user_id: int) -> Any:
-        query = sql.SQL("""
-            SELECT * FROM Users WHERE id = %s;
-        """).format(table_name=sql.Identifier(self.table_name))
+        query = text(f""" SELECT * FROM Users WHERE id = {user_id};""")
 
-        values = (user_id,)
+        user_data_tuple =  self.execute_query(query)
+        user_instance = User(**dict(zip(User.__annotations__, user_data_tuple)))
+        return user_instance
 
+    def login_user(self, user_data) -> Any:
+        query = text("""SELECT * FROM Users WHERE email = :email AND password = :password;""")
+        values = {
+                "email": user_data.email,
+                "password": user_data.password
+            }
         user_data_tuple =  self.execute_query(query, values)
         user_instance = User(**dict(zip(User.__annotations__, user_data_tuple)))
         return user_instance
 
+    #To do : Fix this code
     def update_user(self, user_id: int, user: User) -> Any:
-        query = sql.SQL("""
+        query = text("""
             UPDATE Users
             SET name = %s, email = %s, password = %s, client_number = %s, customer_number = %s
             WHERE id = %s
             RETURNING id, name, email, password, client_number, customer_number;
-        """).format(table_name=sql.Identifier(self.table_name))
+        """)
 
-        values = (user.name, user.email, user.password, user.client_number, user.customer_number, user_id)
+        values = {"name": user.name, 
+                  "email": user.email, 
+                  "password" : user.password, 
+                  "client_number" : user.client_number, 
+                  "customer_care": user.customer_number, 
+                  "id":user_id}
 
         user_data_tuple =  self.execute_query(query, values)
         user_instance = User(**dict(zip(User.__annotations__, user_data_tuple)))
         return user_instance
 
+    #To do : Fix this code
     def delete_user(self, user_id: int) -> Any:
-        query = sql.SQL("""
-            DELETE FROM Users WHERE id = %s
+        query = text(f"""
+            DELETE FROM Users WHERE id = {user_id}
             RETURNING id, name, email, password, client_number, customer_number;
-        """).format(table_name=sql.Identifier(self.table_name))
-
-        values = (user_id,)
+        """)
 
         user_data_tuple = self.execute_query(query, values)
         user_instance = User(**dict(zip(User.__annotations__, user_data_tuple)))

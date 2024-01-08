@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(host="collaborativedocsdb.c9siiamcczqo.ap-southeast-2.rds.amazonaws.com",
+conn = psycopg2.connect(host="independent-way-410316:us-central1:collaborativedocsdb-test",
                         port="5432", 
                         user="postgres",
                         dbname="collaborativedocsdb_test",
@@ -21,20 +21,20 @@ cur.execute("SELECT * FROM Boards;")
 # }
 
 # # Insert the new user into the Users table
-# cur.execute(
-#     """
-#     INSERT INTO Users (name, email, password, client_number, customer_number)
-#     VALUES (%s, %s, %s, %s, %s)
-#     RETURNING id, name, email, client_number, customer_number;
-#     """,
-#     (
-#         new_user_data["name"],
-#         new_user_data["email"],
-#         new_user_data["password"],
-#         new_user_data["client_number"],
-#         new_user_data["customer_number"],
-#     ),
-# )
+cur.execute(
+    """
+    INSERT INTO Users (name, email, password, client_number, customer_number)
+    VALUES (%s, %s, %s, %s, %s)
+    RETURNING id, name, email, client_number, customer_number;
+    """,
+    (
+        new_user_data["name"],
+        new_user_data["email"],
+        new_user_data["password"],
+        new_user_data["client_number"],
+        new_user_data["customer_number"],
+    ),
+)
 
 results = cur.fetchall()
 

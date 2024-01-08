@@ -3,3 +3,4 @@ python-jose
 psycopg2-binary
 sqlalchemy
 pg8000
+cloud-sql-python-connector[pg8000]
